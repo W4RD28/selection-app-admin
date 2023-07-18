@@ -1,6 +1,6 @@
 import { redirect } from "@sveltejs/kit"
 
-export const load = async({ parent, params }) => {
+export const load = async({ parent }) => {
   const { supabase, session } = await parent()
   if (!session) {
     throw redirect(303, '/admin/login')
@@ -15,21 +15,7 @@ export const load = async({ parent, params }) => {
     await supabase.auth.signOut()
   }
 
-  const {slug} = params
-  const { data: resultData } = await supabase
-    .from('test_results')
-    .select('*')
-    .eq("id", slug)
-    .single()
-  const { data: userData } = await supabase
-    .from('users')
-    .select('*')
-    .eq('id', resultData.user_id)
-    .single()
-  
   return {
-    session,
-    resultData,
-    userData
+    adminData
   }
 }

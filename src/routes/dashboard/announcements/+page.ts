@@ -1,6 +1,6 @@
-import { redirect } from "@sveltejs/kit"
+import { redirect } from "@sveltejs/kit";
 
-export const load = async({ parent }) => {
+export const load =async ({ parent }) => {
   const { supabase, session } = await parent()
   if (!session) {
     throw redirect(303, '/admin/login')
@@ -15,13 +15,11 @@ export const load = async({ parent }) => {
     await supabase.auth.signOut()
   }
 
-  const { data: questionData } = await supabase.from('questions').select('*')
-  const { data: usersData } = await supabase.from('users').select('*').eq('role', 'user')
+
+  const { data: announcementsData } = await supabase.from('announcement').select('*')
 
   return {
     session,
-    questionData,
-    usersData
+    announcementsData
   }
 }
-
