@@ -6,11 +6,12 @@
   import { Sidebar, SidebarBrand, SidebarGroup, SidebarItem, SidebarWrapper } from 'flowbite-svelte';
   $: activeUrl = $page.url.pathname
   export let data;
+  import logo from '../../logo1.svg';
 
   const site = {
     name: 'Digmar Admin',
     href: '/dashboard/users',
-    img: '/src/logo1.svg'
+    img: logo
   }
 
   let { supabase, session } = data;
@@ -37,7 +38,7 @@
 <div class="flex flex-cols-2 h-full">
   <Sidebar asideClass="min-w-3/5 bg-gray-50" class="flex border-solid border-2 border-sky-300 rounded-md">
     <SidebarWrapper class="w-full max-h-full min-h-screen">
-      <SidebarBrand {site} />
+      <SidebarBrand {site}/>
       <SidebarGroup>
         <SidebarItem label="Pengguna" href='/dashboard/users' active={activeUrl === '/dashboard/users'} />
         <SidebarItem label="Pengumuman" href='/dashboard/announcements' active={activeUrl === '/dashboard/announcements'} />

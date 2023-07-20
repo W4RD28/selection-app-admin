@@ -1,0 +1,1 @@
+import{r as e}from"../chunks/index.ade5cbd2.js";const r=async({parent:o})=>{throw e(302,"/dashboard/users")},a=Object.freeze(Object.defineProperty({__proto__:null,load:r},Symbol.toStringTag,{value:"Module"}));export{a as universal};
