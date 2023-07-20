@@ -43,7 +43,7 @@
         <TableBodyCell></TableBodyCell>
         <TableBodyCell></TableBodyCell>
         <TableBodyCell></TableBodyCell>
-        <TableBodyCell><Button href="/dashboard/questions/create">Tambahkan Pertanyaan</Button></TableBodyCell>
+        <TableBodyCell><Button href="/dashboard/questions/create" target="_blank">Tambahkan Pertanyaan</Button></TableBodyCell>
       </TableBodyRow>
     </TableBody>
     </Table>
