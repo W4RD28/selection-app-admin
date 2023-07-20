@@ -1,10 +1,32 @@
 <script lang="ts">
+  import { invalidateAll } from '$app/navigation';
   import { A, Heading, P, Input, Label, Button } from 'flowbite-svelte';
 
   export let data
   $: ({ administrationData, resultData } = data)
 
-
+  async function passAdministration(id: string) {
+    const { data: resultData } = await data.supabase
+      .from('test_results')
+      .update({
+        administration_result: "lulus"
+      })
+      .eq("id", id)
+      .select()
+    invalidateAll()
+    alert('Pengguna berhasil dinyatakan lulus administrasi!')
+  }
+  async function failAdministration(id: string) {
+    const { data: resultData } = await data.supabase
+      .from('test_results')
+      .update({
+        administration_result: "tidak lulus"
+      })
+      .eq("id", id)
+      .select()
+    invalidateAll()
+    alert('Pengguna berhasil dinyatakan tidak lulus administrasi!')
+  }
 </script>
 
 <svelte:head>
@@ -76,6 +98,6 @@
     <Label for="lulus" class="mb-2">Lulus?</Label>
     <Input type="text" id="lulus" disabled>{resultData?.administration_result}</Input>
   </div>
-  <Button class="mb-3">Luluskan</Button>
-  <Button class="mb-3">Jangan Luluskan</Button>
+  <Button class="mb-6" color="blue" on:click={() => passAdministration(resultData.id)}>Luluskan</Button>
+  <Button class="mb-6" color="red" on:click={() => failAdministration(resultData.id)}>Tidak Luluskan</Button>
 </form>

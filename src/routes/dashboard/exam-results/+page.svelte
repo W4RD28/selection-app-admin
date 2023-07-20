@@ -69,7 +69,6 @@
         {/await}
         <TableBodyCell><ButtonGroup>
           <Button color="blue" href="/dashboard/exam-results/{item.id}" target="_blank">Detail</Button>
-          <Button color="red">Hapus</Button>
         </ButtonGroup></TableBodyCell>
       </TableBodyRow>
       {/each}

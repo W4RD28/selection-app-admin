@@ -11,7 +11,6 @@ export const load = async({ parent, params }) => {
     .single()
 
   if (adminData?.role != "admin") {
-    alert("Anda tidak memiliki izin yang memenuhi")
     await supabase.auth.signOut()
   }
 

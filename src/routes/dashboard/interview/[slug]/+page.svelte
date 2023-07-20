@@ -1,14 +1,19 @@
 <script lang="ts">
-  import { A, Heading, P, Input, Label, Button, Textarea, Select, ButtonGroup } from 'flowbite-svelte';
+  import { invalidateAll } from '$app/navigation';
+import { A, Heading, P, Input, Label, Button, Textarea, Select, ButtonGroup } from 'flowbite-svelte';
 
   export let data
   $: ({ resultData, interviewData, userData } = data)
 
   async function passInterview() {
     await data.supabase.from('test_results').update({ interview_result: 'lulus' }).eq('user_id', userData.id)
+    invalidateAll()
+    alert('Peserta berhasil dinyatakan lulus!')
   }
   async function failInterview() {
     await data.supabase.from('test_results').update({ interview_result: 'tidak lulus' }).eq('user_id', userData.id)
+    invalidateAll()
+    alert('Peserta berhasil dinyatakan tidak lulus!')
   }
 </script>
 
@@ -17,6 +22,7 @@
 </svelte:head>
 
 <form>
+  <A class="mb-3 mt-6" href="/dashboard/interview"><P color="blue">Kembali ke dashboard wawancara</P></A>
   <div class="ml-10 mt-5 w-3/4">
     <Heading tag="h3" class="mb-6">Detail Wawancara Peserta No {userData.id}</Heading>
     <Heading tag="h4" class="mb-6">Detail Peserta</Heading>
@@ -57,8 +63,8 @@
       <Input id="status" disabled>{resultData.interview_result}</Input>
     </div>
   </div>
-  <ButtonGroup class="mb-10">
+  <div class="mb-10">
     <Button color="blue" on:click={passInterview}>Lulus</Button>
     <Button color="red" on:click={failInterview}>Tidak Lulus</Button>
-  </ButtonGroup>
+  </div>
 </form>

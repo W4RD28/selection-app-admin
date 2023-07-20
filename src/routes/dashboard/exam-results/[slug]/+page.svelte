@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { invalidateAll } from '$app/navigation';
   import { A, Heading, P, Input, Label, Button, ButtonGroup, Textarea, Select, Table, TableBody, TableHead, TableHeadCell, TableBodyCell, TableBodyRow } from 'flowbite-svelte';
   export let data
   $: ({ resultData, userData, userScore, answerData } = data)
@@ -12,6 +13,8 @@
         }
       )
       .eq('id', resultData.id)
+    invalidateAll()
+    alert('Peserta berhasil dinyatakan lulus!')
   }
   async function failTest() {
     await data.supabase
@@ -22,6 +25,8 @@
         }
       )
       .eq('id', resultData.id)
+    invalidateAll()
+    alert('Peserta berhasil dinyatakan tidak lulus!')
   }
 </script>
 
@@ -82,9 +87,7 @@
   </div>
   <!-- Buttons for passing and failing test-->
   <div class="mb-6">
-    <ButtonGroup>
-      <Button color="blue" on:click={passTest}>Lulus</Button>
-      <Button color="red" on:click={failTest}>Tidak Lulus</Button>
-    </ButtonGroup>
+    <Button color="blue" on:click={passTest}>Lulus</Button>
+    <Button color="red" on:click={failTest}>Tidak Lulus</Button>
   </div>
 </form>

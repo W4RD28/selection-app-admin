@@ -19,6 +19,15 @@
   let answer: string;
 
   async function createQuestion() {
+    const { data: existingQuestion } = await data.supabase
+      .from('questions')
+      .select('*')
+      .eq('id', id)
+      .single()
+    if (existingQuestion) {
+      alert('Pertanyaan dengan nomor ini sudah ada!')
+      return
+    }
     await data.supabase
       .from('questions')
       .insert(
@@ -32,6 +41,7 @@
           answer: answer,
         },
       )
+    window.close()
   }
 </script>
 

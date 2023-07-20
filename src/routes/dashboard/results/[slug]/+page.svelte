@@ -27,7 +27,6 @@
       <Label for="asal" class="mb-2">Asal</Label>
       <Input id="asal" disabled>{userData.kelurahan + ", " + userData.kecamatan + ", " + userData.kota}</Input>
     </div>
-    <!-- Button to Look user detail -->
     <div class="mb-6">
       <Button href="/dashboard/users/{userData.id}" target="_blank">Lihat detail pengguna</Button>
     </div>

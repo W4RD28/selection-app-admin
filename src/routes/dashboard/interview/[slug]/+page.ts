@@ -8,7 +8,6 @@ export const load = async ({ parent, params }) => {
   const { data: adminData } = await supabase.from("users").select("*").eq("id", session.user.id).single();
 
   if (adminData?.role != "admin") {
-    alert("Anda tidak memiliki izin yang memenuhi");
     await supabase.auth.signOut();
   }
 

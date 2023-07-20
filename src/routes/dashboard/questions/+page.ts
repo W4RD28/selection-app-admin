@@ -11,11 +11,10 @@ export const load = async({ parent }) => {
     .single()
 
   if (adminData?.role != "admin") {
-    alert("Anda tidak memiliki izin yang memenuhi")
     await supabase.auth.signOut()
   }
 
-  const { data: questionData } = await supabase.from('questions').select('*')
+  const { data: questionData } = await supabase.from('questions').select('*').order('id', { ascending: true })
 
   return {
     session,

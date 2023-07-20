@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { invalidateAll } from '$app/navigation';
   import { A, Heading, P, Input, Label, Button, Textarea, Select } from 'flowbite-svelte';
 
   export let data
@@ -14,6 +15,16 @@
         },
       )
       .eq('id', announcementData.id)
+    alert('Pengumuman berhasil diubah!')
+    invalidateAll()
+  }
+  async function deleteAnnouncement() {
+    await data.supabase
+      .from('announcement')
+      .delete()
+      .eq('id', announcementData.id)
+    alert('Pengumuman berhasil dihapus!')
+    window.close()
   }
 </script>
 
@@ -35,4 +46,5 @@
     </div>
   </div>
   <Button class="mb-6" color="blue" on:click={updateAnnouncement}>Simpan</Button>
+  <Button class="mb-6" color="red" on:click={deleteAnnouncement}>Hapus</Button>
 </form>

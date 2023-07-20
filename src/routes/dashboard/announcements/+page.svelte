@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { invalidateAll } from "$app/navigation";
   import { Table, TableBody, TableBodyCell, TableBodyRow, A, Button, Heading, TableHead, TableHeadCell, ButtonGroup } from "flowbite-svelte"
 
   export let data
@@ -9,6 +10,8 @@
       .from('announcement')
       .delete()
       .eq('id', id)
+    invalidateAll()
+    alert('Pengumuman berhasil dihapus!')
   }
 </script>
 
@@ -47,7 +50,7 @@
         <TableBodyCell></TableBodyCell>
         <TableBodyCell></TableBodyCell>
         <TableBodyCell>
-          <A href="/dashboard/announcements/create">
+          <A href="/dashboard/announcements/create" target="_blank">
             <Button>Tambahkan Pengumuman</Button>
           </A>
         </TableBodyCell>

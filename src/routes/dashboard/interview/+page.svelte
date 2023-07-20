@@ -58,7 +58,7 @@
         <TableBodyCell></TableBodyCell>
         <TableBodyCell></TableBodyCell>
         <TableBodyCell></TableBodyCell>
-        <TableBodyCell><Button href="/dashboard/interview/create">Tambahkan Wawancara</Button></TableBodyCell>
+        <TableBodyCell><Button href="/dashboard/interview/create" target="_blank">Tambahkan Wawancara</Button></TableBodyCell>
       </TableBodyRow>
     </TableBody>
     </Table>

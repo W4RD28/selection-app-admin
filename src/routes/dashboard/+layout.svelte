@@ -40,12 +40,12 @@
       <SidebarBrand {site} />
       <SidebarGroup>
         <SidebarItem label="Pengguna" href='/dashboard/users' active={activeUrl === '/dashboard/users'} />
-        <SidebarItem label="Administrasi" href='/dashboard/administration' active={activeUrl === '/dashboard/administration'} />
+        <SidebarItem label="Pengumuman" href='/dashboard/announcements' active={activeUrl === '/dashboard/announcements'} />
         <SidebarItem label="Pertanyaan Tes Tulis" href='/dashboard/questions' active={activeUrl === '/dashboard/questions'} />
+        <SidebarItem label="Administrasi" href='/dashboard/administration' active={activeUrl === '/dashboard/administration'} />
         <SidebarItem label="Hasil Tes Tulis" href='/dashboard/exam-results' active={activeUrl === '/dashboard/exam-results'} />
         <SidebarItem label="Wawancara" href='/dashboard/interview' active={activeUrl === '/dashboard/interview'} />
         <SidebarItem label="Hasil Ujian" href='/dashboard/results' active={activeUrl === '/dashboard/results'} />
-        <SidebarItem label="Pengumuman" href='/dashboard/announcements' active={activeUrl === '/dashboard/announcements'} />
         <SidebarItem label="Logout" on:click={logOut} />
       </SidebarGroup>
     </SidebarWrapper>

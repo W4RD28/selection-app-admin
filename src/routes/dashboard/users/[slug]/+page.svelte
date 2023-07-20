@@ -1,18 +1,20 @@
 <script lang="ts">
+  import { invalidateAll } from '$app/navigation';
   import { Button, ButtonGroup, P, Heading, Label, Avatar, Input, A } from 'flowbite-svelte';
   
   export let data
   $: ({userData } = data)
   const supabase = data.supabase
   export function generateString(length: number = 8) {
-    
+
+
   const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-    let result = '';
-    const charactersLength = characters.length;
-    for ( let i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
+  let result = '';
+  const charactersLength = characters.length;
+  for ( let i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
 
     return result;
   }
@@ -36,6 +38,47 @@
     const { data } = await supabase.storage.from("cv").getPublicUrl(path);
     return data.publicUrl;
   }
+
+  async function suspendUser(id: string) {
+    const { data: userData } = await supabase
+      .from('users')
+      .update({
+        status: "suspended"
+      })
+      .eq("id", id)
+      .select()
+    invalidateAll()
+  }
+  async function unsuspendUser(id: string) {
+    const { data: userData } = await supabase
+      .from('users')
+      .update({
+        status: "active"
+      })
+      .eq("id", id)
+      .select()
+    invalidateAll()
+  }
+  async function turnToAdmin(id: string) {
+    const { data: userData } = await supabase
+      .from('users')
+      .update({
+        role: "admin"
+      })
+      .eq("id", id)
+      .select()
+    invalidateAll()
+  }
+  async function turnToUser(id: string) {
+    const { data: userData } = await supabase
+      .from('users')
+      .update({
+        role: "user"
+      })
+      .eq("id", id)
+      .select()
+    invalidateAll()
+  }
 </script>
 
 <svelte:head>
@@ -51,7 +94,7 @@
     {:then avatarUrl} 
       <Avatar alt="user image" src={avatarUrl} size="xl" border={true} class="1/2"/>
     {/await}
-    </div>
+  </div>
   <div class="grid gap-10 mb-6 md:grid-cols-3">
     <div class="mb-3">
       <Label for="nama_penuh" class="mb-2">Nama Penuh</Label>
@@ -125,5 +168,24 @@
       <Button class="mb-3 w-32" type="button" color="light" on:click={() => window.open(ijazahUrl)}>Lihat</Button>
       {/await}
     </div>
+    <!--Button to suspend user-->
+    {#if userData.status == "active"}
+    <div class="mb-3">
+      <Button class="mb-3 w-32" type="button" color="yellow" on:click={() => suspendUser(userData.id)}>Nonaktifkan Pengguna</Button>
+    </div>
+    {:else if userData.status == "suspended"}
+    <div class="mb-3">
+      <Button class="mb-3 w-32" type="button" color="yellow" on:click={() => unsuspendUser(userData.id)}>Aktifkan Pengguna</Button>
+    </div>
+    {/if}
+    {#if userData.role == "admin"}
+    <div class="">
+      <Button class="mb-3 w-32" type="button" color="red" on:click={() => turnToUser(userData.id)}>Jadikan Pengguna</Button>
+    </div>
+    {:else if userData.role == "user"}
+    <div class="mb-3">
+      <Button class="mb-3 w-32" type="button" color="red" on:click={() => turnToAdmin(userData.id)}>Jadikan Admin</Button>
+    </div>
+    {/if}
   </div>
 </form>

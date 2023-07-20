@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { invalidateAll } from '$app/navigation';
   import { A, Heading, P, Input, Label, Button, Textarea, Select } from 'flowbite-svelte';
 
   export let data
@@ -11,6 +12,15 @@
   ]
 
   async function updateQuestion() {
+    const { data: existingQuestion } = await data.supabase
+      .from('questions')
+      .select()
+      .eq('id', questionData.id)
+      .single()
+      if (existingQuestion) {
+      alert('Pertanyaan dengan nomor ini sudah ada!')
+      return
+    }
     await data.supabase
       .from('questions')
       .update(
@@ -21,8 +31,20 @@
           option_c: questionData.option_c,
           option_d: questionData.option_d,
           answer: questionData.answer,
+          id: questionData.id,
         },
       )
+      .eq('id', questionData.id)
+    invalidateAll()
+    alert('Pertanyaan berhasil diubah!')
+  }
+  async function deleteQuestion() {
+    await data.supabase
+      .from('questions')
+      .delete()
+      .eq('id', questionData.id)
+    alert('Pertanyaan berhasil dihapus!')
+    window.close()
   }
 </script>
 
@@ -63,6 +85,7 @@
       <Select id="jawaban" items={answers} bind:value={questionData.answer}></Select>
     </div>
     <div class="mb-3">
-      <Button>Simpan</Button>
+      <Button class="mb-6" color="blue" on:click={updateQuestion}>Simpan</Button>
+      <Button class="mb-6" color="red" on:click={deleteQuestion}>Hapus</Button>
     </div>
 </form>

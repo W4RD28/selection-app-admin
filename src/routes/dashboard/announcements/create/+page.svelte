@@ -4,22 +4,23 @@
   export let data
   $: ({adminData} = data)
 
-  let title
-  let content
+  let title: string
+  let content: string
 
   async function createAnnouncement() {
     const { announcementData, error } = await data.supabase
       .from('announcement')
-      .insert([
+      .insert(
         {
           title: title,
           content: content,
         },
-      ])
+      )
     if (error) {
       console.log(error)
     } else {
-      window.location.href = '/dashboard/announcements'
+      alert('Pengumuman berhasil dibuat!')
+      window.close()
     }
   }
 </script>

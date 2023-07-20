@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { invalidateAll } from '$app/navigation';
     import { Button, Heading, ButtonGroup, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
     
     export let data
@@ -12,7 +13,7 @@
         })
         .eq("id", id)
         .select()
-      window.location.reload()  
+      invalidateAll()
     }
     const turnToUser = async (id: string) => {
       const { data: userData } = await data.supabase
@@ -22,7 +23,7 @@
         })
         .eq("id", id)
         .select()
-      window.location.reload()
+      invalidateAll()
     }
     const suspendUser = async (id: string) => {
       const { data: userData } = await data.supabase
@@ -32,7 +33,7 @@
         })
         .eq("id", id)
         .select()
-      window.location.reload()
+      invalidateAll()
     }
     const unsuspendUser = async (id: string) => {
       const { data: userData } = await data.supabase
@@ -42,7 +43,7 @@
         })
         .eq("id", id)
         .select()
-      window.location.reload()
+      invalidateAll()
     }
 </script>
 
